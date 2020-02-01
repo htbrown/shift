@@ -1,0 +1,21 @@
+{
+  "name": "shift",
+  "version": "2.0.0",
+  "description": "Welcome your Discord server to a new realm.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "The Shift Team (Prmpt)",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "crypto-random-string": "^3.0.1",
+    "discord.js": "^11.5.1",
+    "node-fetch": "^2.6.0",
+    "rethinkdb": "^2.3.3",
+    "snekfetch": "^4.0.4",
+    "tenorjs": "^1.0.7",
+    "webdict": "^0.3.0"
+  }
+}

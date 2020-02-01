@@ -1,0 +1,5 @@
+node_modules
+configuration/config.js
+configuration/auth.js
+.idea
+.VSCodeCounter
