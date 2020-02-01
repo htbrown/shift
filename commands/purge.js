@@ -15,15 +15,17 @@ module.exports = async (client, message, args) => {
         } else {
             messages = messages.array().slice(0, args[0])
         }
-        message.channel.bulkDelete(messages).catch(err => {
+        message.channel.bulkDelete(messages).then(() => {
+            if (user) {
+                message.channel.send({embed: client.util.embed(message, `✅ I have deleted ${args[0]} messages from ${user.user.username}.`, 'success')})
+            } else {
+                message.channel.send({embed: client.util.embed(message, `✅ I have deleted ${args[0]} messages.`)})
+            }
+        }).catch(err => {
             client.log.error(`An error occured while purging messages in ${message.guild.name}. Here's the details: \n${err.stack}`)
-            message.channel.send(client.util.embed(message, `Uh oh. Something went wrong while deleting those messages. Here\'s the details: \n\`\`\`md\n${err.stack}\`\`\``, 'error'))
+            message.channel.send({embed: client.util.embed(message, '❌ Something went wrong while deleting those messages. Messages over 14 days old can\'t be deleted.', 'error')})
+            return;
         });
-        if (user) {
-            message.channel.send({embed: client.util.embed(message, `✅ I have deleted ${args[0]} messages from ${user.user.username}.`)})
-        } else {
-            message.channel.send({embed: client.util.embed(message, `✅ I have deleted ${args[0]} messages.`)})
-        }
     })
 };
 

@@ -9,8 +9,14 @@ module.exports = async (client, message, args) => {
 
     message.channel.send({embed: client.util.embed(message, '🕗 Please wait...', 'warn')}).then(async ctx => {
         kickUser.send({embed: client.util.embed(message, `😔 Uh oh, looks like you've been kicked from ${message.guild.name} for ${reason}.`)}).then(() => {
-            message.guild.members.find('id', kickUser.id).kick();
+            message.guild.members.find(m => m.id === kickUser.id).kick();
             ctx.edit({embed: client.util.embed(message, `✅ I have kicked ${kickUser.user.username} for ${reason}.`, 'success')});
+        }).catch(() => {
+            ctx.edit({
+                embed: client.util.embed(message, `✅ I couldn't send a DM to ${kickUser.user.username}, but I kicked them for ${reason} anyway.`, 'success')
+            }).then(() => {
+                message.guild.members.find(m => m.id === kickUser.id).kick();
+            })
         })
     });
 };
