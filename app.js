@@ -122,7 +122,7 @@ client.on("message", async message => {
         .run(client.dbConn)
     );
     let prefix;
-    if (!guildConf.prefix) {
+    if (!guildConf) {
       prefix = '.';
     } else {
       prefix = guildConf.prefix;
