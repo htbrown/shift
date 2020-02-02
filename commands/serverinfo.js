@@ -20,7 +20,7 @@ module.exports = async (client, message, args) => {
 
     let iconUrl;
     if (!message.guild.iconURL) {
-        iconUrl = client.user.avatarURL;
+        iconUrl = client.user.avatarURL();
     } else {
         iconUrl = message.guild.iconURL.replace('jpg', 'png');
     }

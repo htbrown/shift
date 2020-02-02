@@ -27,7 +27,8 @@ module.exports = async (client, message, args) => {
         },
         {
             name: '👓 Node.js Version',
-            value: process.version
+            value: process.version,
+            inline: true
         }
     ];
     message.channel.send({embed: client.util.embed(message, 'Here\'s some statistics:', undefined, undefined, undefined, fields, client.user.avatarURL)})
