@@ -14,7 +14,7 @@ module.exports = async (client, message, args) => {
 
         if (code.includes('token')) return message.channel.send({embed: client.util.embed(message, '❌ Not so fast. You\'re not allowed the token.', 'error')})
 
-        let result = await eval(`(async()=>{${code.includes("return") ? code : "return " + code})()`);
+        let result = await eval(`(async()=>{${code.includes("return") ? code : "return " + code}})()`);
         if (result) result = require("util").inspect(result).toString().replace(new RegExp(tokenRegex(client.token), 'g'), '<token redacted>');
 
         if (result.length > 1000) {
