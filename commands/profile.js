@@ -39,7 +39,7 @@ module.exports = async (client, message, args) => {
             },
             {
                 name: '🔼 Highest Role',
-                value: member.highestRole.name,
+                value: member.roles.highest.name,
                 inline: true
             },
             {
@@ -87,7 +87,7 @@ module.exports = async (client, message, args) => {
             },
             {
                 name: '🔼 Highest Role',
-                value: message.member.highestRole.name,
+                value: message.member.roles.highest.name,
                 inline: true
             },
             {

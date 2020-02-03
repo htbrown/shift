@@ -5,7 +5,7 @@ module.exports = async (client, message, args) => {
         color: 0x36393F,
         author: {
             name: message.author.username,
-            icon_url: message.author.displayAvatarURL
+            icon_url: message.author.displayAvatarURL()
         },
         description: args.join(" "),
         footer: {

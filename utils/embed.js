@@ -21,7 +21,7 @@ module.exports = (message, description, type, footer, image, fields, thumbnail, 
     let output = {
             author: {
                 name: `Hey ${message.author.username}`,
-                icon_url: message.author.avatarURL
+                icon_url: message.author.avatarURL()
             },
             color,
             title,

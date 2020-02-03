@@ -22,7 +22,7 @@ module.exports = async (client, message, args) => {
     if (!message.guild.iconURL) {
         iconUrl = client.user.avatarURL();
     } else {
-        iconUrl = message.guild.iconURL.replace('jpg', 'png');
+        iconUrl = message.guild.iconURL().replace('jpg', 'png');
     }
 
     let date = new Date(message.guild.createdTimestamp);

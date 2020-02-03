@@ -247,7 +247,7 @@ module.exports = async (client, message, args) => {
         collector.on('collect', async r => {
             let x = confs.filter(c => c.emoji === r.emoji.name);
             x.map(e => {
-                ctx.clearReactions().catch(err => client.log.error(err));
+                ctx.reactions.removeAll().catch(err => client.log.error(err));
                 if (r.emoji.name === '❌') {
                     collector.stop();
                     ctx.edit({

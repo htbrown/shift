@@ -27,7 +27,7 @@ module.exports = async (client, message, args) => {
             ctx.edit({
                 embed: client.util.embed(message, `✅ I couldn't send a DM to ${banUser.user.username}, but I banned them for ${reason} anyway.`, 'success')
             }).then(() => {
-                message.guild.ban(banUser.id);
+                message.guild.members.ban(banUser.id);
             })
         })
     });

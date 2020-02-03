@@ -5,7 +5,7 @@ module.exports = async (client, message, args) => {
     if (args[0] > 100) return message.channel.send({embed: client.util.embed(message, '❌ You can\'t delete more than 100 messages at a time.', 'error')})
     var user = message.mentions.members.first();
     message.delete();
-    message.channel.fetchMessages({
+    message.channel.messages.fetch({
         limit: 100
     }).then(messages => {
         if (user) {

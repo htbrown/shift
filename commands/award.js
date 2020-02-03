@@ -31,11 +31,11 @@ module.exports = async (client, message, args) => {
     if (logStatus != false) {
         let channel = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logChannel;
 
-        message.guild.channels.find(c => c.name == channel).send({
+        message.guild.channels.find(c => c.id == channel).send({
             embed: {
                 author: {
                     name: client.user.username,
-                    icon_url: client.user.avatarURL
+                    icon_url: client.user.avatarURL()
                 },
                 description: `${awardUser.user.tag} has been given an award by ${message.author.tag}.`,
                 fields: [{

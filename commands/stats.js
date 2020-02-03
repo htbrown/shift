@@ -12,7 +12,7 @@ module.exports = async (client, message, args) => {
         },
         {
             name: '🏓 Ping',
-            value: `${Math.floor(client.ping)}ms`,
+            value: `${Math.floor(client.ws.ping)}ms`,
             inline: true
         },
         {
@@ -31,7 +31,7 @@ module.exports = async (client, message, args) => {
             inline: true
         }
     ];
-    message.channel.send({embed: client.util.embed(message, 'Here\'s some statistics:', undefined, undefined, undefined, fields, client.user.avatarURL)})
+    message.channel.send({embed: client.util.embed(message, 'Here\'s some statistics:', undefined, undefined, undefined, fields, client.user.avatarURL())})
 }
 
 module.exports.info = {

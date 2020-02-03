@@ -15,7 +15,7 @@ const Discord = require("discord.js"),
   r = require("rethinkdb"),
   package = require('./package.json');
 
-const client = new Discord.Client();
+const client = new Discord.Client({restTimeOffset: -Infinity});
 
 client.db = require("rethinkdb");
 
@@ -235,7 +235,7 @@ client.on('guildMemberAdd', async (member) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: `Hey ${member.user.username}`,
-        icon_url: member.user.avatarURL
+        icon_url: member.user.avatarURL()
       },
       description: msg,
       color: 0x36393F,
@@ -260,7 +260,7 @@ client.on('guildMemberAdd', async (member) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `${member.user.tag} has just joined the server.`,
       fields: [
@@ -306,7 +306,7 @@ client.on('guildMemberRemove', async (member) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: `Bye ${member.user.username}`,
-        icon_url: member.user.avatarURL
+        icon_url: member.user.avatarURL()
       },
       description: msg,
       color: 0x36393F,
@@ -331,7 +331,7 @@ client.on('guildMemberRemove', async (member) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `${member.user.tag} has just left the server.`,
       fields: [
@@ -374,7 +374,7 @@ client.on('guildBanAdd', async (guild, user) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `${user.tag} has been banned from the server.`,
       fields: [
@@ -412,7 +412,7 @@ client.on('guildBanRemove', async (guild, user) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `${user.tag} has been unbanned from the server.`,
       fields: [
@@ -446,7 +446,7 @@ client.on('messageDelete', async (message) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `A message from ${message.author.tag} has been deleted.`,
       fields: [
@@ -485,7 +485,7 @@ client.on('messageDeleteBulk', async (messages) => {
         client.channels.find(c => c.id === channel).send({embed: {
           author: {
             name: client.user.username,
-            icon_url: client.user.avatarURL
+            icon_url: client.user.avatarURL()
           },
           description: `Some messages have been deleted from ${messages.first().channel.name}.`,
           fields: [
@@ -519,7 +519,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     client.channels.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
-        icon_url: client.user.avatarURL
+        icon_url: client.user.avatarURL()
       },
       description: `${oldMessage.author.tag}'s message was edited.`,
       fields: [
