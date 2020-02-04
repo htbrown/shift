@@ -4,7 +4,7 @@ module.exports = async (client, message, args) => {
         let agreeRole = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).verifyRole;
         let member = message.guild.member(message.author.id);
 
-        member.addRole(message.guild.roles.find(r => r.name == agreeRole));
+        member.roles.add(message.guild.roles.find(r => r.name == agreeRole));
         message.delete();
 
         message.author.send({embed: client.util.embed(message, `✅ I have given you the ${agreeRole} role in ${message.guild.name}.`, 'success')})
