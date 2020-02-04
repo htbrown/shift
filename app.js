@@ -39,10 +39,23 @@ r.connect(
   }
 );
 
+const commands = [];
+class Command {
+  constructor(name, command) {
+    commands.push({name, exec: command});
+  }
+}
+
 // Ready event
 
 client.on("ready", () => {
   client.util = {};
+
+  fs.readdirSync('./commands').filter(c => c.endsWith('.js')).map(c => c.replace('.js', '')).forEach(c => {
+    new Command(c, require(`./commands/${c}`));
+    client.log.success(`Successfully loaded the ${c} command.`);
+  })
+
   fs.readdirSync("./utils").forEach(u => {
     let util = u.split(".js")[0];
     client.util[util] = require(`./utils/${u}`);
@@ -92,7 +105,6 @@ function checkGuildDb(message, guildID) {
 // Message Event
 
 client.on("message", async message => {
-  try {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
 
@@ -149,73 +161,17 @@ client.on("message", async message => {
       .split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    try {
-      const cmdFile = require(`./commands/${command}`);
-      if (cmdFile) {
-        try {
-          cmdFile(client, message, args);
-        } catch (err) {
-          client.log.error(
-            `An error has occured while running the ${command} command. Here's the details: \n${err.stack}`
-          );
-          message.channel.send({
-            embed: client.util.embed(
-              message,
-              `Uh oh. Something went wrong while running that command. I've DMed you the details. If you continue to get this error, please contact Shift support. [Shift Server](https://discord.gg/4a6R7ev)`,
-              "error"
-            )
-          });
-          message.author.send({
-            embed: client.util.embed(
-              message,
-              `Uh oh. Something went wrong while running the \`${command}\` command in ${message.guild.name} (${message.guild.id}). Here\'s the details: \n\`\`\`md\n${err.stack}\`\`\``,
-              "error"
-            )
-          });
+    commands.forEach(c => {
+      try {
+        if (c.name === command) {
+          c.exec(client, message, args);
+          client.log.info(`${message.author.tag} (${message.author.id}) has just run ${message.content} in ${message.guild.name} (${message.guild.id}).`);
         }
+      } catch (err) {
+        message.channel.send({embed: client.util.embed(message, '❌ Uh oh... Looks like something went wrong with that command. I have DMed you the details. If you continue to get this error, please contact [Shift Support](https://discord.gg/4a6R7ev).', 'error')});
+        message.author.send({embed: client.util.embed(message, `❌ Uh oh... Looks like something went wrong with the command you ran in ${message.guild.name}. Here's the details: \n\`\`\`md\n${err}\`\`\``, 'error')});
       }
-      client.log.info(
-        `${message.author.tag} has executed the ${command} command in ${message.guild.name}.`
-      );
-    } catch (err) {
-      if (!fs.existsSync(`./commands/${command}.js`)) return;
-      client.log.error(
-        `An error has occured while running the ${command} command. Here's the details: \n${err.stack}`
-      );
-      message.channel.send({
-        embed: client.util.embed(
-          message,
-          `Uh oh. Something went wrong while running that command. I've DMed you the details. If you continue to get this error, please contact Shift support. [Shift Server](https://discord.gg/4a6R7ev)`,
-          "error"
-        )
-      });
-      message.author.send({
-        embed: client.util.embed(
-          message,
-          `Uh oh. Something went wrong while running the \`${command}\` command in ${message.guild.name} (${message.guild.id}). Here\'s the details: \n\`\`\`md\n${err.stack}\`\`\``,
-          "error"
-        )
-      });
-    }
-  } catch (err) {
-    client.log.error(
-      `An error has occured. Here's the details: \n${err.stack}`
-    );
-    message.channel.send({
-      embed: client.util.embed(
-        message,
-        `Uh oh. Something went wrong. I've DMed you the details. If you continue to get this error, please contact Shift support. [Shift Server](https://discord.gg/4a6R7ev)`,
-        "error"
-      )
-    });
-    message.author.send({
-      embed: client.util.embed(
-        message,
-        `Uh oh. Something went wrong in ${message.guild.name} (${message.guild.id}). Here\'s the details: \n\`\`\`md\n${err.stack}\`\`\``,
-        "error"
-      )
-    });
-  }
+    })
 });
 
 // guildMemberAdd
