@@ -1,6 +1,7 @@
 const cryptoRandomString = require('crypto-random-string');
 module.exports = async (client, message, args) => {
     let awardUser = message.mentions.members.first();
+    let user = client.users.get(awardUser.id);
     let reason = args.slice(1).join(" ");
     let awardId = cryptoRandomString({length: 5});
 
@@ -23,7 +24,7 @@ module.exports = async (client, message, args) => {
     });
 
     message.channel.send({embed: client.util.embed(message, `✅ I have given ${awardUser.user.username} an award for \`${reason}\`.`, 'success')});
-    awardUser.send({embed: client.util.embed(message, `😄 Congrats! You've just been given an award in ${message.guild.name} for \`${reason}\`.`)})
+    awardUser.send({embed: client.util.embed(user, `😄 Congrats! You've just been given an award in ${message.guild.name} for \`${reason}\`.`)})
 
     // Logging
 

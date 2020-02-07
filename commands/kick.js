@@ -1,5 +1,6 @@
 module.exports = async (client, message, args) => {
     let kickUser = message.mentions.members.first();
+    let user = client.users.get(kickUser.id);
     let reason = args.slice(1).join(' ');
 
     if (!reason) reason = 'No reason specified';
@@ -8,12 +9,12 @@ module.exports = async (client, message, args) => {
     if (!kickUser.kickable) return message.channel.send({embed: client.util.embed(message, '❌ This user cannot be kicked because I do not have the appropriate permissions to do so. If this is an error, make sure I have the right permissions, and am higher than the user you are trying to kick.', 'error')})
 
     message.channel.send({embed: client.util.embed(message, '🕗 Please wait...', 'warn')}).then(async ctx => {
-        kickUser.send({embed: client.util.embed(message, `😔 Uh oh, looks like you've been kicked from ${message.guild.name} for ${reason}.`)}).then(() => {
+        kickUser.send({embed: client.util.embed(user, `😔 Uh oh, looks like you've been kicked from ${message.guild.name} for \`${reason}\`.`)}).then(() => {
             message.guild.members.find(m => m.id === kickUser.id).kick();
-            ctx.edit({embed: client.util.embed(message, `✅ I have kicked ${kickUser.user.username} for ${reason}.`, 'success')});
+            ctx.edit({embed: client.util.embed(message, `✅ I have kicked ${kickUser.user.username} for \`${reason}\`.`, 'success')});
         }).catch(() => {
             ctx.edit({
-                embed: client.util.embed(message, `✅ I couldn't send a DM to ${kickUser.user.username}, but I kicked them for ${reason} anyway.`, 'success')
+                embed: client.util.embed(message, `✅ I couldn't send a DM to ${kickUser.user.username}, but I kicked them for \`${reason}\` anyway.`, 'success')
             }).then(() => {
                 message.guild.members.find(m => m.id === kickUser.id).kick();
             })

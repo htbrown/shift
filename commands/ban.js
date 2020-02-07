@@ -1,5 +1,6 @@
 module.exports = async (client, message, args) => {
     let banUser = message.mentions.members.first();
+    let user = client.users.get(banUser.id);
     let reason = args.slice(1).join(' ');
 
     if (!reason) reason = 'No reason specified';
@@ -17,15 +18,15 @@ module.exports = async (client, message, args) => {
         embed: client.util.embed(message, '🕗 Please wait...', 'warn')
     }).then(async ctx => {
         banUser.send({
-            embed: client.util.embed(message, `😔 Uh oh, looks like you've been banned from ${message.guild.name} for ${reason}.`)
+            embed: client.util.embed(user, `😔 Uh oh, looks like you've been banned from ${message.guild.name} for \`${reason}\`.`)
         }).then(() => {
-            message.guild.ban(banUser.id);
+            message.guild.members.find(m => m.id === banUser.id).ban();
             ctx.edit({
-                embed: client.util.embed(message, `✅ I have banned ${banUser.user.username} for ${reason}.`, 'success')
+                embed: client.util.embed(message, `✅ I have banned ${banUser.user.username} for \`${reason}\`.`, 'success')
             });
         }).catch(() => {
             ctx.edit({
-                embed: client.util.embed(message, `✅ I couldn't send a DM to ${banUser.user.username}, but I banned them for ${reason} anyway.`, 'success')
+                embed: client.util.embed(message, `✅ I couldn't send a DM to ${banUser.user.username}, but I banned them for \`${reason}\` anyway.`, 'success')
             }).then(() => {
                 message.guild.members.ban(banUser.id);
             })

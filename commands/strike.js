@@ -1,6 +1,7 @@
 const cryptoRandomString = require('crypto-random-string');
 module.exports = async (client, message, args) => {
     let strikeUser = message.mentions.members.first();
+    let user = client.users.get(strikeUser.id);
     let reason = args.slice(1).join(" ");
     let strikeId = cryptoRandomString({
         length: 5
@@ -34,7 +35,7 @@ module.exports = async (client, message, args) => {
         embed: client.util.embed(message, `✅ I have stricken ${strikeUser.user.username} for \`${reason}\`.`, 'success')
     });
     strikeUser.send({
-        embed: client.util.embed(message, `😮 Uh oh, looks like you've been stricken in ${message.guild.name} for \`${reason}\`.`)
+        embed: client.util.embed(user, `😮 Uh oh, looks like you've been stricken in ${message.guild.name} for \`${reason}\`.`)
     })
 
     // Logging

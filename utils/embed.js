@@ -2,7 +2,7 @@ const package = require('../package.json');
 
 let color;
 
-module.exports = (message, description, type, footer, image, fields, thumbnail, title) => {
+module.exports = (user, description, type, footer, image, fields, thumbnail, title) => {
     switch (type) {
         case 'success':
             color = 0x2ecc71;
@@ -18,10 +18,13 @@ module.exports = (message, description, type, footer, image, fields, thumbnail, 
             break;
     }
 
-    let output = {
+    let output;
+
+    if (!user.author) {
+        output = {
             author: {
-                name: `Hey ${message.author.username}`,
-                icon_url: message.author.avatarURL()
+                name: `Hey ${user.username}`,
+                icon_url: user.avatarURL()
             },
             color,
             title,
@@ -35,5 +38,25 @@ module.exports = (message, description, type, footer, image, fields, thumbnail, 
                 text: footer !== undefined ? footer + ` | v${package.version}` : `v${package.version}`,
             }
         };
+    } else {
+        output = {
+            author: {
+                name: `Hey ${user.author.username}`,
+                icon_url: user.author.avatarURL()
+            },
+            color,
+            title,
+            description,
+            fields,
+            thumbnail: {
+                url: thumbnail
+            },
+            image,
+            footer: {
+                text: footer !== undefined ? footer + ` | v${package.version}` : `v${package.version}`,
+            }
+        };
+    }
+
     return output;
 }

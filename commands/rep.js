@@ -10,7 +10,7 @@ module.exports = async (client, message, args) => {
         if (repPoints >= 100) return message.channel.send({embed: client.util.embed(message, '😇 This user is already at the maximum reputation you can get (100). Good for them!')});
 
         client.db.table('users').get(u.user.id).update({repPoints: repPoints + 5}).run(client.dbConn);
-        message.channel.send({embed: client.util.embed(message, `✅ I have added 5 reputation points to ${u.user.username}`, 'success')});
+        message.channel.send({embed: client.util.embed(message, `✅ I have added 5 reputation points to ${u.user.username}.`, 'success')});
     } else if (args[1] == 'negative') {
         if (!u) return message.channel.send({embed: client.util.embed(message, '❌ You need to mention a user!', 'error')});
         if (u.user.id == message.author.id) return message.channel.send({embed: client.util.embed(message, '❌ You can\'t change your own points!', 'error')})
