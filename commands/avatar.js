@@ -9,5 +9,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Grab someone\'s avatar.',
     usage: 'avatar (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: ['pfp']
 }

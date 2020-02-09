@@ -68,5 +68,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Award a user.',
     usage: 'award [@mention] (reason)',
-    maintainer: false
+    maintainer: false,
+    aliases: ['merit']
 }

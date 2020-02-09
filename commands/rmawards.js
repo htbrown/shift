@@ -64,5 +64,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Remove one or more awards from a user.',
     usage: 'rmawards [id] (id) (id)...',
-    maintainer: false
+    maintainer: false,
+    aliases: ['rmaward']
 }

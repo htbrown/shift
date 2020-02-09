@@ -80,5 +80,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Strike a user.',
     usage: 'strike [@mention] (reason)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

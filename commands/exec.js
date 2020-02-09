@@ -21,5 +21,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Run a shell/bash command.',
     usage: 'exec [command]',
-    maintainer: true
+    maintainer: true,
+    aliases: []
 }

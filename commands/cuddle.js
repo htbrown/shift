@@ -8,5 +8,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Cuddle someone.',
     usage: 'cuddle (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

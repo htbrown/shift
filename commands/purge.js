@@ -32,5 +32,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Purge messages from a channel, either generally, or from a specified user.',
     usage: 'purge [amount] (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: ['nuke']
 }

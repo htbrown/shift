@@ -44,5 +44,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
   description: "Find out how gay someone is.",
   usage: "gay (@mention)",
-  maintainer: false
+  maintainer: false,
+  aliases: []
 };

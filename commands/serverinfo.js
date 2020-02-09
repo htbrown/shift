@@ -68,5 +68,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Shows information about the current server.',
     usage: 'serverinfo',
-    maintainer: false
+    maintainer: false,
+    aliases: ['server']
 }

@@ -105,5 +105,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Get information about a user.',
     usage: 'profile (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

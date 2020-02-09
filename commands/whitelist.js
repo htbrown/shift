@@ -46,5 +46,6 @@ module.exports = async (client, message, args) => {
   module.exports.info = {
     description: "whitelist a user from using the bot.",
     usage: "whitelist [id]",
-    maintainer: true
+    maintainer: true,
+    aliases: []
   };

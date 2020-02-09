@@ -25,5 +25,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Ship 2 people together.',
     usage: 'ship [@mention] [@mention]',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

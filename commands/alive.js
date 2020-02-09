@@ -35,5 +35,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Find out how alive someone is.',
     usage: 'alive (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

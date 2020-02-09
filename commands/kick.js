@@ -25,5 +25,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Kick a user from the current server.',
     usage: 'kick [@mention] (reason)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

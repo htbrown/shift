@@ -37,5 +37,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Get bot statistics.',
     usage: 'stats',
-    maintainer: false
+    maintainer: false,
+    aliases: ['statistics']
 }
