@@ -36,5 +36,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Gives you information on the different commands you can run.',
     usage: 'help',
-    maintainer: false
+    maintainer: false,
+    aliases: ['commands']
 }

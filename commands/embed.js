@@ -17,5 +17,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Embed a message.',
     usage: 'embed [message]',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

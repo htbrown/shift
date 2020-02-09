@@ -74,5 +74,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'See someone\'s awards.',
     usage: 'awards (@mention)',
-    maintainer: false
+    maintainer: false,
+    aliases: ['merits']
 }

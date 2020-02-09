@@ -277,5 +277,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Configure the database for your server.',
     usage: 'config',
-    maintainer: false
+    maintainer: false,
+    aliases: ['setup']
 }

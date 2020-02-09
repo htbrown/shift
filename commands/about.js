@@ -5,5 +5,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'About Shift',
     usage: 'about',
-    maintainer: false
+    maintainer: false,
+    aliases: ['info']
 }

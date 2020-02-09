@@ -54,5 +54,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Remove one or more strikes from a user.',
     usage: 'rmstrikes [id] (id) (id)...',
-    maintainer: false
+    maintainer: false,
+    aliases: ['rmstrike']
 }

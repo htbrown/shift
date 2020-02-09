@@ -41,5 +41,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Manage a users reputation points.',
     usage: 'rep [@mention] (positive/negative)',
-    maintainer: false
+    maintainer: false,
+    aliases: ['reputation']
 }

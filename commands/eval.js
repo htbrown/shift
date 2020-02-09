@@ -44,5 +44,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Evaluate code.',
     usage: 'eval [code]',
-    maintainer: true
+    maintainer: true,
+    aliases: ['ev']
 }

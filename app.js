@@ -25,24 +25,24 @@ client.log.info("Getting ready...");
 
 client.log.info("Initializing database...");
 r.connect(
-  {
-    db: "shift"
-  },
-  (err, conn) => {
-    if (err) {
-      client.log.warn(`Error while connecting to the database: \n${err.stack}`);
-    } else {
-      client.log.success("Connected to RethinkDB.");
-      conn.use("shift");
-      client.dbConn = conn;
-    }
-  }
+  	{
+    	db: "shift"
+  	},
+  	(err, conn) => {
+    	if (err) {
+      		client.log.warn(`Error while connecting to the database: \n${err.stack}`);
+    	} else {
+			client.log.success("Connected to RethinkDB.");
+			conn.use("shift");
+			client.dbConn = conn;
+    	}
+  	}
 );
 
 const commands = [];
 class Command {
-  constructor(name, command) {
-    commands.push({name, exec: command});
+  constructor(name, command, aliases) {
+    commands.push({name, exec: command, aliases});
   }
 }
 
@@ -52,8 +52,8 @@ client.on("ready", () => {
   client.util = {};
 
   fs.readdirSync('./commands').filter(c => c.endsWith('.js')).map(c => c.replace('.js', '')).forEach(c => {
-    new Command(c, require(`./commands/${c}`));
-    client.log.success(`Successfully loaded the ${c} command.`);
+    new Command(c, require(`./commands/${c}`), require(`./commands/${c}`).info.aliases);
+    client.log.success(`Successfully loaded the ${c} command. Aliases registered: ` + require(`./commands/${c}`).info.aliases);
   })
 
   fs.readdirSync("./utils").forEach(u => {
@@ -110,68 +110,73 @@ client.on("message", async message => {
 
     await checkGuildDb(message, message.guild.id);
     const userDB = (await r
-      .table("users")
-      .get(message.author.id)
-      .run(client.dbConn));
+      	.table("users")
+      	.get(message.author.id)
+      	.run(client.dbConn));
   
     if (!userDB) {
-      let defaultUserDb = require("./configuration/defaultDb/user.js");
-      defaultUserDb.id = message.author.id;
-      r.table("users")
-        .insert(defaultUserDb)
-        .run(client.dbConn, (err, cursor) => {
-          if (err) return client.log.error(err);
-          client.log.info(
-            `Added the default user variables (specified in configuration/defaultDb/user.js) to the database for ${message.author.username} with the ID of ${message.author.id}.`
-          );
-        });
+      	let defaultUserDb = require("./configuration/defaultDb/user.js");
+      	defaultUserDb.id = message.author.id;
+      	r.table("users")
+        	.insert(defaultUserDb)
+        	.run(client.dbConn, (err, cursor) => {
+          	if (err) return client.log.error(err);
+				client.log.info(
+					`Added the default user variables (specified in configuration/defaultDb/user.js) to the database for ${message.author.username} with the ID of ${message.author.id}.`
+				);
+        	});
     }
 
     let guildConf = (
-      await r
-        .table("guilds")
-        .get(message.guild.id)
-        .run(client.dbConn)
-    );
+      	await r
+        	.table("guilds")
+        	.get(message.guild.id)
+        	.run(client.dbConn)
+	);
+	
     let prefix;
     if (!guildConf) {
-      prefix = '.';
+     	prefix = '.';
     } else {
-      prefix = guildConf.prefix;
+      	prefix = guildConf.prefix;
     }
     if (!message.content.startsWith(prefix)) return;
 
     let isBlacklisted = (
-      await r
-        .table("users")
-        .get(message.author.id)
-        .run(client.dbConn)
+      	await r
+        	.table("users")
+        	.get(message.author.id)
+        	.run(client.dbConn)
     ).blacklist;
     if (isBlacklisted != false) {
-      client.log.warn(
-        `${message.author.username} (${message.author.id}) has been blocked from running a command due to their current blacklist.`
-      );
-      message.author.send({embed: client.util.embed(message, '❌ Oops... Looks like you\'ve been blacklisted from using this bot. Please contact Shift support if you believe this was a mistake. [Shift Server](https://discord.gg/4a6R7ev)', 'error')})
-      return;
+      	client.log.warn(
+        	`${message.author.username} (${message.author.id}) has been blocked from running a command due to their current blacklist.`
+      	);
+      	message.author.send({embed: client.util.embed(message, '❌ Oops... Looks like you\'ve been blacklisted from using this bot. Please contact Shift support if you believe this was a mistake. [Shift Server](https://discord.gg/4a6R7ev)', 'error')})
+      	return;
     }
 
     const args = message.content
-      .slice(prefix.length)
-      .trim()
-      .split(/ +/g);
+      	.slice(prefix.length)
+      	.trim()
+		.split(/ +/g);
+	
     const command = args.shift().toLowerCase();
 
     commands.forEach(c => {
-      try {
-        if (c.name === command) {
-          c.exec(client, message, args);
-          client.log.info(`${message.author.tag} (${message.author.id}) has just run ${message.content} in ${message.guild.name} (${message.guild.id}).`);
-        }
-      } catch (err) {
-        message.channel.send({embed: client.util.embed(message, '❌ Uh oh... Looks like something went wrong with that command. I have DMed you the details. If you continue to get this error, please contact [Shift Support](https://discord.gg/4a6R7ev).', 'error')});
-        message.author.send({embed: client.util.embed(message, `❌ Uh oh... Looks like something went wrong with the command you ran in ${message.guild.name}. Here's the details: \n\`\`\`md\n${err}\`\`\``, 'error')});
-      }
-    })
+    	try {
+        	if (c.name === command) {
+          		c.exec(client, message, args);
+          		client.log.info(`${message.author.tag} (${message.author.id}) has just run ${message.content} in ${message.guild.name} (${message.guild.id}).`);
+			} else if (c.aliases.includes(command)) {
+				c.exec(client, message, args);
+				client.log.info(`${message.author.tag} (${message.author.id}) has just run ${message.content} in ${message.guild.name} (${message.guild.id}).`);
+			}
+      	} catch (err) {
+        	message.channel.send({embed: client.util.embed(message, '❌ Uh oh... Looks like something went wrong with that command. I have DMed you the details. If you continue to get this error, please contact [Shift Support](https://discord.gg/4a6R7ev).', 'error')});
+        	message.author.send({embed: client.util.embed(message, `❌ Uh oh... Looks like something went wrong with the command you ran in ${message.guild.name}. Here's the details: \n\`\`\`md\n${err}\`\`\``, 'error')});
+      	}
+    });
 });
 
 // guildMemberAdd

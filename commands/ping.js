@@ -8,5 +8,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Ping the bot.',
     usage: 'ping',
-    maintainer: false
+    maintainer: false,
+    aliases: ['latency']
 };

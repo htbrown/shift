@@ -16,5 +16,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Gives a new member the verification role set for the server.',
     usage: 'agree',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }

@@ -10,5 +10,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
   description: "Sends an invite for the bot.",
   usage: "invite",
-  maintainer: false
+  maintainer: false,
+  aliases: []
 };

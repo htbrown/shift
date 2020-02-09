@@ -1,16 +1,14 @@
 module.exports = async (client, message, args) => {
-  if (
-    !require("../configuration/config.js").maintainers.includes(
-      message.author.id
-    )
-  )
-    return message.channel.send({
+  if (!require("../configuration/config.js").maintainers.includes(message.author.id)) {
+	return message.channel.send({
       embed: client.util.embed(
         message,
         "❌ *Oi!* This is a maintainer only command! Get lost!",
         "error"
       )
     });
+  }
+
   if (message.mentions.members.first()) args[0] = args[0].replace("<@", "").replace("!", "").replace(">", "")
   if (!args[0])
     return message.channel.send({
@@ -46,5 +44,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
   description: "Blacklist a user from using the bot.",
   usage: "blacklist [id]",
-  maintainer: true
+  maintainer: true,
+  aliases: []
 };

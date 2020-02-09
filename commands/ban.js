@@ -37,5 +37,6 @@ module.exports = async (client, message, args) => {
 module.exports.info = {
     description: 'Ban a user from the current server.',
     usage: 'ban [@mention] (reason)',
-    maintainer: false
+    maintainer: false,
+    aliases: []
 }
