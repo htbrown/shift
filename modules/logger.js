@@ -1,23 +1,23 @@
 const chalk = require('chalk');
 
-let date = new Date();
+time = () => {
+  let now = new Date();
+  let date = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+  return date.toLocaleTimeString();
+};
 
 exports.info = (message) => {
-    date = new Date();
-    console.log('[' + chalk.cyan(`i`) + '|' + chalk.cyan(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) + ']' + chalk.cyan(` ${message}`))
-}
+    console.log(`${chalk.gray(time())} ${chalk.cyan('[i]')} ${message}`)
+};
 
 exports.success = (message) => {
-    date = new Date();
-    console.log('[' + chalk.green(`✓`) + '|' + chalk.green(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) + ']' + chalk.green(` ${message}`))
-}
+    console.log(`${chalk.gray(time())} ${chalk.green('[✓]')} ${message}`)
+};
 
 exports.warn = (message) => {
-    date = new Date();
-    console.log('[' + chalk.yellow(`!`) + '|' + chalk.yellow(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) + ']' + chalk.yellow(` ${message}`))
-}
+    console.log(`${chalk.gray(time())} ${chalk.yellow('[!]')} ${message}`)
+};
 
 exports.error = (message) => {
-    date = new Date();
-    console.log('[' + chalk.red(`X`) + '|' + chalk.red(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) + ']' + chalk.red(` ${message}`))
-}
+    console.log(`${chalk.gray(time())} ${chalk.red('[x]')} ${message}`)
+};

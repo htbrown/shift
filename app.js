@@ -54,7 +54,7 @@ client.on("ready", () => {
   fs.readdirSync('./commands').filter(c => c.endsWith('.js')).map(c => c.replace('.js', '')).forEach(c => {
     new Command(c, require(`./commands/${c}`), require(`./commands/${c}`).info.aliases);
     client.log.success(`Successfully loaded the ${c} command. Aliases registered: ` + require(`./commands/${c}`).info.aliases);
-  })
+  });
 
   fs.readdirSync("./utils").forEach(u => {
     let util = u.split(".js")[0];
@@ -189,7 +189,7 @@ client.on('guildMemberAdd', async (member) => {
 
   let guild = member.guild;
 
-  if (welcomeStatus != false) {
+  if (welcomeStatus !== false) {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).welcomeChannel;
     let msg = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).welcomeMsg.replace('{user}', member.user.tag).replace('{server}', guild.name);
 
@@ -210,7 +210,7 @@ client.on('guildMemberAdd', async (member) => {
     client.log.info(`${member.user.username} has just joined ${guild.name}. I have logged this appropriately.`);
   }
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).logChannel;
     let createdDate = new Date(member.user.createdTimestamp);
     let createdAt = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
@@ -260,7 +260,7 @@ client.on('guildMemberRemove', async (member) => {
 
   let guild = member.guild;
 
-  if (leaveStatus != false) {
+  if (leaveStatus !== false) {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).leaveChannel;
     let msg = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).leaveMsg.replace('{user}', member.user.tag).replace('{server}', guild.name);
 
@@ -281,7 +281,7 @@ client.on('guildMemberRemove', async (member) => {
     client.log.info(`${member.user.tag} has just left ${guild.name}. I have logged this appropriately.`);
   }
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).logChannel;
     let createdDate = new Date(member.user.createdTimestamp);
     let createdAt = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
@@ -326,7 +326,7 @@ client.on('guildMemberRemove', async (member) => {
 client.on('guildBanAdd', async (guild, user) => {
   let logStatus = (await client.db.table('guilds').get(guild.id).run(client.dbConn)).logging;
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(guild.id).run(client.dbConn)).logChannel;
 
     let createdDate = new Date(user.createdTimestamp);
@@ -364,7 +364,7 @@ client.on('guildBanAdd', async (guild, user) => {
 client.on('guildBanRemove', async (guild, user) => {
   let logStatus = (await client.db.table('guilds').get(guild.id).run(client.dbConn)).logging;
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(guild.id).run(client.dbConn)).logChannel;
 
     let createdDate = new Date(user.createdTimestamp);
@@ -401,7 +401,7 @@ client.on('messageDelete', async (message) => {
   if (!message.guild) return;
   let logStatus = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logging;
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logChannel;
 
     client.channels.find(c => c.id === channel).send({embed: {
@@ -430,7 +430,7 @@ client.on('messageDeleteBulk', async (messages) => {
   if (!messages.first().guild) return;
   let logStatus = (await client.db.table('guilds').get(messages.first().guild.id).run(client.dbConn)).logging;
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let hastebinContent = `Shift Bulk Delete Logs for ${new Date()}\n---------------------------------------------------------------------------------------------`;
     let channel = (await client.db.table('guilds').get(messages.first().guild.id).run(client.dbConn)).logChannel;
     messages.forEach(msg => {
@@ -474,7 +474,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
   let logStatus = (await client.db.table('guilds').get(oldMessage.guild.id).run(client.dbConn)).logging;
   if (oldMessage.author.bot) return;
 
-  if (logStatus != false) {
+  if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(oldMessage.guild.id).run(client.dbConn)).logChannel;
 
     client.channels.find(c => c.id === channel).send({embed: {

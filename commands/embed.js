@@ -1,6 +1,7 @@
 module.exports = async (client, message, args) => {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send({embed: client.util.embed(message, '❌ You\'re not allowed to run this command. If you believe this is an error, make sure you have the `Manage Messages` permission.', 'error')});
-    if (!args) return message.channel.send({embed: client.util.embed(message, '❌ You need to add a message!')})
+    if (!args) return message.channel.send({embed: client.util.embed(message, '❌ You need to add a message!')});
+    message.delete();
     message.channel.send({embed: {
         color: 0x36393F,
         author: {
