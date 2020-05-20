@@ -2,12 +2,12 @@ module.exports = async (client, message, args) => {
     let fields = [
         {
             name: '🏠 Servers',
-            value: client.guilds.size,
+            value: client.guilds.cache.size,
             inline: true
         },
         {
             name: '👥 Members',
-            value: client.users.size,
+            value: client.users.cache.size,
             inline: true
         },
         {

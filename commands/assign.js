@@ -11,15 +11,15 @@ module.exports = async (client, message, args) => {
         });
         message.channel.send({embed: client.util.embed(message, roles)});
     } else {
-        if (!message.guild.roles.some(r => r.name === role)) return message.channel.send({embed: client.util.embed(message, '❌ You need to give me a valid role!', 'error')});
+        if (!message.guild.roles.cache.some(r => r.name === role)) return message.channel.send({embed: client.util.embed(message, '❌ You need to give me a valid role!', 'error')});
         if (!assignableRoles.includes(role)) return message.channel.send({embed: client.util.embed(message, '❌ That role isn\'t an assignable role!', 'error')});
 
-        if (!message.member.roles.some(r => r.name === role)) {
-            message.member.roles.add(message.guild.roles.find(r => r.name === role)).then(() => {
+        if (!message.member.roles.cache.some(r => r.name === role)) {
+            message.member.roles.add(message.guild.roles.cache.find(r => r.name === role)).then(() => {
                 message.channel.send({embed: client.util.embed(message, `✅ I have given you the \`${role}\` role.`, 'success')});
             }).catch(err => message.channel.send({embed: client.util.embed(message, `❌ Oops! Looks like something went wrong. Here's the details:\n \`\`\`${err}\`\`\``, 'error')}));
         } else {
-            message.member.roles.remove(message.guild.roles.find(r => r.name === role)).then(() => {
+            message.member.roles.remove(message.guild.roles.cache.find(r => r.name === role)).then(() => {
                 message.channel.send({embed: client.util.embed(message, `✅ I have taken the \`${role}\` role from you.`, 'success')});
             }).catch(err => message.channel.send({embed: client.util.embed(message, `❌ Oops! Looks like something went wrong. Here's the details:\n \`\`\`${err}\`\`\``, 'error')}));
         }

@@ -1,6 +1,6 @@
 {
   "name": "shift",
-  "version": "2.1.0",
+  "version": "2.1.5",
   "description": "Welcome your Discord server to a new realm.",
   "main": "app.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "crypto-random-string": "^3.0.1",
-    "discord.js": "github:discordjs/discord.js",
+    "discord.js": "^12.1.1",
     "node-fetch": "^2.6.0",
     "rethinkdb": "^2.3.3",
     "snekfetch": "^4.0.4",

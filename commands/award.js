@@ -1,7 +1,7 @@
 const cryptoRandomString = require('crypto-random-string');
 module.exports = async (client, message, args) => {
     let awardUser = message.mentions.members.first();
-    let user = client.users.get(awardUser.id);
+    let user = client.users.cache.get(awardUser.id);
     let reason = args.slice(1).join(" ");
     let awardId = cryptoRandomString({length: 5});
 
@@ -32,7 +32,7 @@ module.exports = async (client, message, args) => {
     if (logStatus != false) {
         let channel = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logChannel;
 
-        message.guild.channels.find(c => c.id == channel).send({
+        message.guild.channels.cache.find(c => c.id == channel).send({
             embed: {
                 author: {
                     name: client.user.username,

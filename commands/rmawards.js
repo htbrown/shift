@@ -34,7 +34,7 @@ module.exports = async (client, message, args) => {
     if (logStatus != false) {
         let channel = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logChannel;
 
-        message.guild.channels.find(c => c.id == channel).send({
+        message.guild.channels.cache.find(c => c.id == channel).send({
             embed: {
                 author: {
                     name: client.user.username,

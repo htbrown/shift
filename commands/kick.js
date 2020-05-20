@@ -1,6 +1,6 @@
 module.exports = async (client, message, args) => {
     let kickUser = message.mentions.members.first();
-    let user = client.users.get(kickUser.id);
+    let user = client.users.cache.get(kickUser.id);
     let reason = args.slice(1).join(' ');
 
     if (!reason) reason = 'No reason specified';

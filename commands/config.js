@@ -44,7 +44,7 @@ module.exports = async (client, message, args) => {
                     let textCollector = ctx.channel.createMessageCollector(m => m.author.id === message.author.id);
                     textCollector.on('collect', async res => {
                         if (!Number(res.content)) return ctx.edit({embed: client.util.embed(message, '❌ That isn\'t a valid channel ID. Please send the correct channel ID.', 'error')})
-                        if (!message.guild.channels.find(col => col.id === res.content)) return ctx.edit({
+                        if (!message.guild.channels.cache.find(col => col.id === res.content)) return ctx.edit({
                             embed: client.util.embed(message, '❌ That isn\'t a valid channel in this server (or my permissions aren\'t high enough to see it). Please send the correct channel ID.', 'error')
                         });
                         client.db.table('guilds').get(message.guild.id).update({
@@ -102,7 +102,7 @@ module.exports = async (client, message, args) => {
                     let textCollector = ctx.channel.createMessageCollector(m => m.author.id === message.author.id);
                     textCollector.on('collect', async res => {
                         if (!Number(res.content)) return ctx.edit({embed: client.util.embed(message, '❌ That isn\'t a valid channel ID. Please send the correct channel ID.', 'error')})
-                        if (!message.guild.channels.find(col => col.id === res.content)) return ctx.edit({
+                        if (!message.guild.channels.cache.find(col => col.id === res.content)) return ctx.edit({
                             embed: client.util.embed(message, '❌ That isn\'t a valid channel in this server (or my permissions aren\'t high enough to see it). Please send the correct channel ID.', 'error')
                         });
                         client.db.table('guilds').get(message.guild.id).update({
@@ -159,7 +159,7 @@ module.exports = async (client, message, args) => {
                     });
                     let textCollector = ctx.channel.createMessageCollector(m => m.author.id === message.author.id);
                     textCollector.on('collect', async res => {
-                        if (!message.guild.roles.find(col => col.name === res.content)) return ctx.edit({
+                        if (!message.guild.roles.cache.find(col => col.name === res.content)) return ctx.edit({
                             embed: client.util.embed(message, '❌ That isn\'t a valid role in this server. Please send the correct role name.', 'error')
                         });
                         client.db.table('guilds').get(message.guild.id).update({
@@ -196,7 +196,7 @@ module.exports = async (client, message, args) => {
                     let textCollector = ctx.channel.createMessageCollector(m => m.author.id === message.author.id);
                     textCollector.on('collect', async res => {
                         if (!Number(res.content)) return ctx.edit({embed: client.util.embed(message, '❌ That isn\'t a valid channel ID. Please send the correct channel ID.', 'error')})
-                        if (!message.guild.channels.find(col => col.id == res.content)) return ctx.edit({embed: client.util.embed(message, '❌ That isn\'t a valid channel in this server (or my permissions aren\'t high enough to see it). Please send the correct channel name.', 'error')})
+                        if (!message.guild.channels.cache.find(col => col.id == res.content)) return ctx.edit({embed: client.util.embed(message, '❌ That isn\'t a valid channel in this server (or my permissions aren\'t high enough to see it). Please send the correct channel name.', 'error')})
                         client.db.table('guilds').get(message.guild.id).update({
                             logging: true,
                             logChannel: res.content

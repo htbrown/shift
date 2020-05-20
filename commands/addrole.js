@@ -3,7 +3,7 @@ module.exports = async (client, message, args) => {
 
     if (!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send({embed: client.util.embed(message, '❌ You\'re not allowed to run this command. If you believe this is an error, make sure you have the `Manage Roles` permission.', 'error')});
     if (!role) return message.channel.send({embed: client.util.embed(message, '❌ You need to give me a valid role!', 'error')});
-    if (!message.guild.roles.some(r => r.name === role)) return message.channel.send({embed: client.util.embed(message, '❌ You need to give me a valid role!', 'error')});
+    if (!message.guild.roles.cache.some(r => r.name === role)) return message.channel.send({embed: client.util.embed(message, '❌ You need to give me a valid role!', 'error')});
 
     let assignableRoles = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).assignableRoles;
 

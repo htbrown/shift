@@ -193,7 +193,7 @@ client.on('guildMemberAdd', async (member) => {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).welcomeChannel;
     let msg = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).welcomeMsg.replace('{user}', member.user.tag).replace('{server}', guild.name);
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: `Hey ${member.user.username}`,
         icon_url: member.user.avatarURL()
@@ -218,7 +218,7 @@ client.on('guildMemberAdd', async (member) => {
     let joinedDate = new Date(member.joinedTimestamp);
     let joinedAt = `${joinedDate.getDate()}/${joinedDate.getMonth() + 1}/${joinedDate.getFullYear()}`;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()
@@ -264,7 +264,7 @@ client.on('guildMemberRemove', async (member) => {
     let channel = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).leaveChannel;
     let msg = (await client.db.table('guilds').get(member.guild.id).run(client.dbConn)).leaveMsg.replace('{user}', member.user.tag).replace('{server}', guild.name);
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: `Bye ${member.user.username}`,
         icon_url: member.user.avatarURL()
@@ -289,7 +289,7 @@ client.on('guildMemberRemove', async (member) => {
     let joinedDate = new Date(member.joinedTimestamp);
     let joinedAt = `${joinedDate.getDate()}/${joinedDate.getMonth() + 1}/${joinedDate.getFullYear()}`;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()
@@ -332,7 +332,7 @@ client.on('guildBanAdd', async (guild, user) => {
     let createdDate = new Date(user.createdTimestamp);
     let createdAt = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()
@@ -370,7 +370,7 @@ client.on('guildBanRemove', async (guild, user) => {
     let createdDate = new Date(user.createdTimestamp);
     let createdAt = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()
@@ -404,7 +404,7 @@ client.on('messageDelete', async (message) => {
   if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(message.guild.id).run(client.dbConn)).logChannel;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()
@@ -443,7 +443,7 @@ client.on('messageDeleteBulk', async (messages) => {
   
     require('snekfetch').post('https://hasteb.in/documents', {data: hastebinContent}).then(res => {
       if (res.body.key) {
-        client.channels.find(c => c.id === channel).send({embed: {
+        client.channels.cache.find(c => c.id === channel).send({embed: {
           author: {
             name: client.user.username,
             icon_url: client.user.avatarURL()
@@ -477,7 +477,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
   if (logStatus !== false) {
     let channel = (await client.db.table('guilds').get(oldMessage.guild.id).run(client.dbConn)).logChannel;
 
-    client.channels.find(c => c.id === channel).send({embed: {
+    client.channels.cache.find(c => c.id === channel).send({embed: {
       author: {
         name: client.user.username,
         icon_url: client.user.avatarURL()

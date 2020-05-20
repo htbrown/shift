@@ -1,19 +1,19 @@
 module.exports = async (client, message, args) => {
     let verLev;
     switch (message.guild.verificationLevel) {
-        case 0:
+        case 'NONE':
             verLev = 'None';
             break;
-        case 1:
+        case 'LOW':
             verLev = 'Verified email (low)';
             break;
-        case 2:
+        case 'MEDIUM':
             verLev = 'Registered for 5+ mins (medium)'
             break;
-        case 3:
+        case 'HIGH':
             verLev = 'Member for 10+ mins (high)'
             break;
-        case 4:
+        case 'VERY_HIGH':
             verLev = 'Verified phone number (very high)'
             break;
     }
@@ -57,7 +57,7 @@ module.exports = async (client, message, args) => {
         },
         {
             name: '#️⃣ Channels',
-            value: message.guild.channels.filter(c => c.type !== 'catagory').size,
+            value: message.guild.channels.cache.size,
             inline: true
         }
     ];
