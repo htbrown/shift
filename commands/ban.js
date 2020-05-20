@@ -1,6 +1,5 @@
 module.exports = async (client, message, args) => {
     let banUser = message.mentions.members.first();
-    let user = client.users.cache.get(banUser.id);
     let reason = args.slice(1).join(' ');
 
     if (!reason) reason = 'No reason specified';
@@ -13,6 +12,8 @@ module.exports = async (client, message, args) => {
     if (!banUser.bannable) return message.channel.send({
         embed: client.util.embed(message, '❌ This user cannot be banned because I do not have the appropriate permissions to do so. If this is an error, make sure I have the right permissions, and am higher than the user you are trying to ban.', 'error')
     })
+
+    let user = client.users.cache.get(banUser.id);
 
     message.channel.send({
         embed: client.util.embed(message, '🕗 Please wait...', 'warn')

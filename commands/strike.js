@@ -1,7 +1,6 @@
 const cryptoRandomString = require('crypto-random-string');
 module.exports = async (client, message, args) => {
     let strikeUser = message.mentions.members.first();
-    let user = client.users.cache.get(strikeUser.id);
     let reason = args.slice(1).join(" ");
     let strikeId = cryptoRandomString({
         length: 5
@@ -14,6 +13,8 @@ module.exports = async (client, message, args) => {
         embed: client.util.embed(message, '❌ You need to mention a user!', 'error')
     });
     if (!reason) reason = 'No reason specified';
+
+    let user = client.users.cache.get(strikeUser.id);
 
     client.db.table('strikes').insert({
         id: strikeId,
