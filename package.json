@@ -1,6 +1,6 @@
 {
   "name": "shift",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Welcome your Discord server to a new realm.",
   "main": "app.js",
   "scripts": {

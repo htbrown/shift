@@ -4,7 +4,7 @@ module.exports = async (client, message, args) => {
 
     if (!reason) reason = 'No reason specified';
     if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send({embed: client.util.embed(message, '❌ You\'re not allowed to run this command. If you believe this is an error, make sure you have the `Kick Members` permission.', 'error')});
-    if (!kickUser) return message.channel.send({embed: client.util.embed(message, '❌ You need to mention a user!')});
+    if (!kickUser) return message.channel.send({embed: client.util.embed(message, '❌ You need to mention a user!', 'error')});
     if (!kickUser.kickable) return message.channel.send({embed: client.util.embed(message, '❌ This user cannot be kicked because I do not have the appropriate permissions to do so. If this is an error, make sure I have the right permissions, and am higher than the user you are trying to kick.', 'error')})
 
     let user = client.users.cache.get(kickUser.id);
